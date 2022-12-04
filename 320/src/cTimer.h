@@ -19,7 +19,7 @@ class cTimer {
 	int channel_id;
 	int connection_id;
 
-	struct sigevent sig_event;
+	struct sigevent sigev;
 	struct itimerspec timer_spec;
 	timer_t timer_id;
 
@@ -28,11 +28,11 @@ class cTimer {
 	uint64_t cycles_per_sec;
 	uint64_t tick_cycles, tock_cycles;
 public:
-	cTimer(uint32_t,uint32_t);
+	cTimer(int offset, int period);
 
-	void setTimerSpec(uint32_t,uint32_t);
+	void setTimerSpec(int, int);
 	void waitTimer();
-	void startTimer();
+	int startTimer(int offset, int period);
 	void tick();
 	double tock();
 	virtual ~cTimer();

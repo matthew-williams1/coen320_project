@@ -1,43 +1,27 @@
-/*
- * Display.h
- *
- *  Created on: Dec. 3, 2022
- *      Author: coen320
- */
-
 #ifndef DISPLAY_H_
 #define DISPLAY_H_
 #include <iostream>
 #include <pthread.h>
 #include <vector>
-#include <tuple>
+#include <stdlib.h>
 #include "ComputerSystem.h"
 #include "cTimer.h"
+#include "Structures.h"
 
 
 
 class Display {
-public:
-	void clear();
-	pthread_t thread_id_disp;
-	Display();
 	friend void * display_start_routine(void* arg);
-	//void *ptr;
-	void push();
-	void runDisplay();
-	void receiveData();
-	//std::tuple <int, int, int> plane; // tuple (ID, positionX, positionY)
-	//std::vector< tuple<int, int, int> > planes;
+	void *ptr;
+	int rcvid;
 
-
-	static std::vector<int> ID;
-	static std::vector<int> posX;
-	static std::vector<int> posY;
+public:
+	pthread_t thread_id;
+	std::vector<plane_info> planes;
+	void * threadTask(void * );
+	Display();
+	int runDisplay();
+	virtual ~Display();
 };
-
-
-//virtual ~Display();
-
-
 
 #endif /* DISPLAY_H_ */
