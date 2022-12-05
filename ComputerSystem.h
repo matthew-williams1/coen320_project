@@ -8,23 +8,28 @@
 #include <string.h>
 #include <sys/dispatch.h>
 #include <vector>
+#include <math.h>
 #include "Plane.h"
-typedef struct plane_info {
-	int ID, posX, posY, posZ, velX, velY, velZ;
-} plane_info;
+#include "Structures.h"
 
 class ComputerSystem {
 	pthread_mutex_t mutex;
-	friend void * start_routine(void* arg); // thread start routine
+	friend void * start_routine(void* arg); // compsys thread start routine
 	void *ptr;
 	int rcvid;
+	int server_coid;
+	std::vector<plane_info>planes;
 public:
-	std::vector<plane_info> planes;
 	pthread_t thread_id;
-	void * threadTask(void *);
+	pthread_t thread_coll;
+	void * threadTask(void * );
 	ComputerSystem();
-	void fromRadar();
+	int fromRadar();
 	void calcCollision();
-	void toDisplay();
+	int toDisplay(all_planes);
 	virtual ~ComputerSystem();
+
+
 };
+
+#endif /* SRC_COMPUTERSYSTEM_H_ */
